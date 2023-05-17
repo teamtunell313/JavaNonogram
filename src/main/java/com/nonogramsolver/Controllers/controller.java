@@ -2,7 +2,7 @@ package com.nonogramsolver.Controllers;
 
 import com.nonogramsolver.Models.Puzzle;
 import com.nonogramsolver.Models.Solution;
-import com.nonogramsolver.Services.LineCycler;
+import com.nonogramsolver.Services.Cycler;
 
 import java.util.Arrays;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class controller {
   
   @Autowired
-  LineCycler lineCycler;
+  Cycler cycler;
 
   @GetMapping()
   public String index(){
@@ -26,7 +26,7 @@ public class controller {
   
   @PostMapping(consumes="application/json")
   public Solution post(@RequestBody Puzzle puzzle){
-    System.out.println(puzzle);
-    return lineCycler.solve(puzzle);
+    System.out.println(puzzle + "\n");
+    return cycler.solve(puzzle);
   }
 }
