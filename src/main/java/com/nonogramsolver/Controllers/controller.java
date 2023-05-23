@@ -4,7 +4,6 @@ import com.nonogramsolver.Models.Puzzle;
 import com.nonogramsolver.Models.Solution;
 import com.nonogramsolver.Services.Cycler;
 
-import java.util.Arrays;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

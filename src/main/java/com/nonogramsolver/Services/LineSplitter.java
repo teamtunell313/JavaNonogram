@@ -3,8 +3,6 @@ package com.nonogramsolver.Services;
 import com.nonogramsolver.Models.Line;
 import com.nonogramsolver.Models.Opening;
 
-import java.util.Stack;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
