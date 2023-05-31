@@ -3,7 +3,6 @@ package com.nonogramsolver.Nonogram;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import com.nonogramsolver.Services.LineSplitter;
 import com.nonogramsolver.Services.OpeningSolver;
 
 @SpringBootTest
-class NonogramApplicationTests {
+class LineSplitterTests {
 
 	@Mock
 	OpeningSolver openingSolver;
