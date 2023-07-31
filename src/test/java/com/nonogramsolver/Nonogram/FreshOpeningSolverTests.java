@@ -85,7 +85,8 @@ public class FreshOpeningSolverTests {
   // null state 4 Wiggle
   @Test
 	public void nullState_4Wiggle_1Hint() {
-		given.hints = new int[] {1};		
+		given.hints = new int[] {1};
+		given.calculateDotProfile();
 		Opening expected = new Opening(new int[] {}, new Boolean[] {null, null, null, null, null}, 0, 4);
     Opening actual = openingSolver.solve(given);
 		assertArrayEquals(actual.state, expected.state, actual.state.toString());
