@@ -2,16 +2,19 @@ package com.nonogramsolver.Models;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class Opening {
-  public int[] hints;
+  public List<Integer> hints;
+  public Stack<Stack<Integer>> possibleHintSets;
   public Boolean[] state;
   public int startIndex;
   public int endIndex;
   public Boolean isComplete = true;
   public List<List<Integer>> dotProfile = new ArrayList<>(new ArrayList<>());
+  public int totalDots = 0;
   
-  public Opening(int[] hints, Boolean[] state, int startIndex, int endIndex){
+  public Opening(List<Integer> hints, Boolean[] state, int startIndex, int endIndex){
     this.hints = hints;
     this.state = state;
     this.startIndex = startIndex;
@@ -49,13 +52,14 @@ public class Opening {
     }
     if (seriesLength > 0){
       dotProfile.add(new ArrayList<>(List.of(startIndex, seriesLength)));
+      totalDots += seriesLength;
     }
   }
 
 
   @Override
   public String toString(){
-    return String.format("Hint: %2s  State: %-31s", Arrays.toString(hints), Arrays.toString(state));
+    return String.format("Hint: %2s  State: %-31s", Arrays.toString(hints.toArray()), Arrays.toString(state));
   }
 }
 

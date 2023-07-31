@@ -17,26 +17,26 @@ public class OpeningSolver {
     System.out.println(opening);
     
     // no hints, fill with false
-    if (opening.hints.length == 0) {
+    if (opening.hints.size() == 0) {
       Arrays.fill(opening.state, false);
       return opening;
     }
     
-    int determined = IntStream.of(opening.hints).sum() + opening.hints.length - 1;
+    int determined = opening.hints.stream().reduce(0, Integer::sum) + opening.hints.size() - 1;
     int wiggle = opening.state.length - determined;
     
     // hints dictate all spaces
     if (wiggle == 0){
       int position = 0;
-      for (int h = 0; h < opening.hints.length; h++){
+      for (int h = 0; h < opening.hints.size(); h++){
         if(position > 0){
           opening.state[position] = false;
           position ++;
         }
-        for (int i = 0; i < opening.hints[h]; i++){
+        for (int i = 0; i < opening.hints.get(h); i++){
           opening.state[position + i] = true;
         }
-        position += opening.hints[h];
+        position += opening.hints.get(h);
       }
     }
 
@@ -45,15 +45,13 @@ public class OpeningSolver {
       // opening is clean
       if (opening.dotProfile.size() == 0){
         int position = 0;
-        for (int h = 0; h < opening.hints.length; h++){
-          if (opening.hints[h] > wiggle){
-            for (int i = wiggle; i < opening.hints[h]; i++){
+        for (int h = 0; h < opening.hints.size(); h++){
+          if (opening.hints.get(h) > wiggle){
+            for (int i = wiggle; i < opening.hints.get(h); i++){
               opening.state[position + i] = true;
             }
-            position += opening.hints[h];
-          } else {
-            position += opening.hints[h];
           }
+          position += opening.hints.get(h);
           position++;
         }
       }
@@ -70,7 +68,7 @@ public class OpeningSolver {
 
   private void calculateHintCoverage(Opening opening, int wiggle){
     // just one hint
-    if (opening.hints.length == 1){
+    if (opening.hints.size() == 1){
       // add up the total dot span, and compare to hint size.
       if (opening.dotProfile.size() == 1){
         Integer firstDot = opening.dotProfile.get(0).get(0);

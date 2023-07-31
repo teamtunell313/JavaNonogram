@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.argThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -30,28 +32,28 @@ class LineSplitterTests {
 	@Captor
 	ArgumentCaptor<Opening> openingCaptor = ArgumentCaptor.forClass(Opening.class);
 
-	Line oneOpeningLine = new Line(new int[] {2}, new Boolean[] {false, false, true, null, false});
-	Opening oneExpectedOpening = new Opening(null, new Boolean[]{true, null}, 2, 3);
+	Line oneOpeningLine = new Line(List.of(2), new Boolean[] {false, false, true, null, false});
+	Opening oneExpectedOpening = new Opening(List.of(2), new Boolean[]{true, null}, 2, 3);
 
-	Line twoOpeningLine = new Line(new int[] {1,1}, new Boolean[] {null, false, true, null, false});
+	Line twoOpeningLine = new Line(List.of(1, 1), new Boolean[] {null, false, true, null, false});
 	Opening[] twoExpectedOpenings = {
-		new Opening(null, new Boolean[]{null}, 0, 0),
-		new Opening(null, new Boolean[]{true, null}, 2, 3)
+		new Opening(List.of(1), new Boolean[]{null}, 0, 0),
+		new Opening(List.of(1), new Boolean[]{true, null}, 2, 3)
 	};
 
-	Line threeOpeningLine = new Line(new int[] {1}, new Boolean[] {null, false, true, false, null});
+	Line threeOpeningLine = new Line(List.of(1), new Boolean[] {null, false, true, false, null});
 	Opening[] threeExpectedOpenings = {
-		new Opening(null, new Boolean[]{null}, 0, 0),
-		new Opening(null, new Boolean[]{true}, 2, 2),
-		new Opening(null, new Boolean[]{null}, 4, 4)
+		new Opening(List.of(0), new Boolean[]{null}, 0, 0),
+		new Opening(List.of(1), new Boolean[]{true}, 2, 2),
+		new Opening(List.of(0), new Boolean[]{null}, 4, 4)
 	};
 
 	@Test
 	public void oneOpeningSplit() {
 		lineSplitter.split(oneOpeningLine);
 		verify(openingSolver, times(1)).solve(openingCaptor.capture());
-		assertNull(openingCaptor.getValue().hints);
-		assertArrayEquals(oneExpectedOpening.state, openingCaptor.getValue().state);
+		assertEquals(oneExpectedOpening.hints, openingCaptor.getValue().hints);
+		assertEquals(oneExpectedOpening.state, openingCaptor.getValue().state);
 	}
 
 	@Test
@@ -62,8 +64,8 @@ class LineSplitterTests {
 		List<Opening> capturedOpenings = openingCaptor.getAllValues();
 		assertNull(capturedOpenings.get(0).hints);
 		assertNull(capturedOpenings.get(1).hints);
-		assertArrayEquals(twoExpectedOpenings[0].state, capturedOpenings.get(0).state);
-		assertArrayEquals(twoExpectedOpenings[1].state, capturedOpenings.get(1).state);
+		assertEquals(twoExpectedOpenings[0].state, capturedOpenings.get(0).state);
+		assertEquals(twoExpectedOpenings[1].state, capturedOpenings.get(1).state);
 	}
 
 	@Test
@@ -73,8 +75,8 @@ class LineSplitterTests {
 		
 		List<Opening> capturedOpenings = openingCaptor.getAllValues();
 		assertNull(capturedOpenings.get(0).hints);
-		assertArrayEquals(threeExpectedOpenings[0].state, capturedOpenings.get(0).state);
-		assertArrayEquals(threeExpectedOpenings[1].state, capturedOpenings.get(1).state);
-		assertArrayEquals(threeExpectedOpenings[2].state, capturedOpenings.get(2).state);
+		assertEquals(threeExpectedOpenings[0].state, capturedOpenings.get(0).state);
+		assertEquals(threeExpectedOpenings[1].state, capturedOpenings.get(1).state);
+		assertEquals(threeExpectedOpenings[2].state, capturedOpenings.get(2).state);
 	}
 }
